@@ -9,7 +9,7 @@ namespace ContaBancaria
 {
     public class ContaManager
     {
-        private IContaRepository ContaRepository { get; set; }
+        public IContaRepository ContaRepository { get; set; }
 
         public ContaManager(IContaRepository contaRepository)
         {

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using ContaBancaria.Conta;
+using ContaBancaria.InFile;
+using ContaBancaria.InMemory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContaBancaria.Conta;
-using ContaBancaria.InMemory;
 
 namespace ContaBancaria
 {
     internal class Program
     {
 
-        private static ContaManager manager = new ContaManager(new ContaInMemory());
+        private static ContaManager manager = new ContaManager(new ContaInFile());
 
         static void Main(string[] args)
         {
@@ -30,6 +31,8 @@ namespace ContaBancaria
                 if (opcao == "Y")
                     exit = true;
             }
+
+            manager.ContaRepository.Dispose();
         }
 
         private static void ExibeMenu()
@@ -76,14 +79,7 @@ namespace ContaBancaria
             //Buscas as contas do usuário que deseja depositar o recurso;
             var contas = manager.ObterContas(cpf);
 
-            var contaDeposito = contas.Where(x =>
-            {
-                if (opcao == "1" && x is ContaCorrente)
-                    return true;
-                else if (opcao == "2" && x is ContaPoupanca)
-                    return true;
-                return false;
-            }).FirstOrDefault();
+            var contaDeposito = contas.FirstOrDefault();
 
             contaDeposito.Depositar(valor);
 
@@ -111,14 +107,7 @@ namespace ContaBancaria
             //Buscas as contas do usuário que deseja transferir o recurso;
             var contas = manager.ObterContas(cpf);
 
-            var contaOrigem = contas.Where(x =>
-            {
-                if (opcao == "1" && x is ContaCorrente)
-                    return true;
-                else if (opcao == "2" && x is ContaPoupanca)
-                    return true;
-                return false;
-            }).FirstOrDefault();
+            var contaOrigem = contas.FirstOrDefault();
 
             //Transfere da conta origem para conta destino
             contaOrigem.Transferir(contaDestino, valor);

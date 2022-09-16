@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace ContaBancaria.Conta
 {
-    public abstract class Conta
+    public class Conta
     {
         public string Nome { get; set; }
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
         public Decimal Saldo { get; set; }
 
-        public abstract void ExibirSaldo();
+        public virtual void ExibirSaldo()
+        {
+            Console.WriteLine($"O Saldo para a sua conta é {Saldo}");
+        }
 
         public void ValidarAberturaConta()
         {

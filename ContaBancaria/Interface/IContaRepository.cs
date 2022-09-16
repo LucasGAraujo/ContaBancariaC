@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContaBancaria.Interface
 {
-    public interface IContaRepository
+    public interface IContaRepository : IDisposable
     {
         void Cadastrar(Conta.Conta conta);
         List<Conta.Conta> ObterPorCPF(string cpf);
